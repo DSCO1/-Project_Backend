@@ -26,23 +26,24 @@ This is the backend service for the "One-Stop Personalized Career & Education Ad
 ## 📂 Project Structure
 
 The project follows a modular architecture to separate concerns:
+
+```
 app/
-|-- api/              # Handles API endpoints
+|-- api/
 |   |-- endpoints/
 |       |-- careers.py
 |       |-- colleges.py
 |       |-- recommendations.py
 |       |-- skills.py
 |       |-- users.py
-|-- core/             # Core configuration (e.g., database connection)
-|-- models/           # SQLAlchemy database models
-|-- schemas.py        # Pydantic data shaping models
-|-- services/         # Business logic (e.g., recommendation engine)
-|-- main.py           # Main FastAPI application instance
-scripts/              # Utility scripts (e.g., database seeder)
+|-- core/
+|-- models/
+|-- schemas.py
+|-- services/
+|-- main.py
+scripts/
+```
 
-
----
 ## ⚙️ Setup and Installation
 
 To run this project locally, follow these steps:
