@@ -1,13 +1,12 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-# CHANGED: We now import from 'app' directly.
+from typing import List
 from app.core.database import SessionLocal
 from app.services.recommendation_service import RecommendationService
+from app import schemas
 
-# Create a router to group related endpoints
 router = APIRouter()
 
-# Dependency to get a DB session
 def get_db():
     db = SessionLocal()
     try:
@@ -15,15 +14,15 @@ def get_db():
     finally:
         db.close()
 
-@router.post("/recommendations/")
-def get_career_recommendations(quiz_answers: dict, db: Session = Depends(get_db)):
+# The endpoint now includes the user_id in the path
+@router.post("/users/{user_id}/recommendations/", response_model=List[schemas.Career])
+def get_career_recommendations(user_id: str, quiz_answers: dict, db: Session = Depends(get_db)):
     """
-    Accepts quiz answers and returns personalized career recommendations.
+    Accepts quiz answers for a specific user and returns personalized 
+    career recommendations with associated skills and courses.
     """
-    # Create an instance of our service
     service = RecommendationService(db_session=db)
-    
-    # Call the method we just built
-    recommendations = service.get_recommendations(quiz_answers)
-    
+    recommendations = service.get_recommendations(user_id=user_id, quiz_answers=quiz_answers)
+    if recommendations and "error" in recommendations[0]:
+         raise HTTPException(status_code=404, detail=recommendations[0]["error"])
     return recommendations
