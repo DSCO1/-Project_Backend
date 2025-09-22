@@ -96,5 +96,3 @@ The interactive API documentation is the best place to see and test all endpoint
 | `GET`  | `/api/careers/`                        | Get a list of all careers and their skills.      |
 | `GET`  | `/api/colleges/`                       | Get a list of all colleges and their courses.    |
 | `GET`  | `/api/skills/`                         | Get a list of all skills and their careers.      |
-
-This README gives a complete and professional overview of the entire backend you've built.
