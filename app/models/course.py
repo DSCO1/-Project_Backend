@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.orm import relationship
-from .associations import college_course_association
+from .associations import college_course_association, career_course_association # <-- UPDATE
 
 from ..core.database import Base
 
@@ -14,3 +14,4 @@ class Course(Base):
     description = Column(Text, nullable=True)
     
     colleges = relationship("College", secondary=college_course_association, back_populates="courses")
+    careers = relationship("Career", secondary=career_course_association, back_populates="courses") # <-- ADD THIS
