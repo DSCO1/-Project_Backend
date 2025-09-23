@@ -7,6 +7,9 @@ from app.models.skill import Skill
 from app.models.course import Course
 from app.models.college import College
 from app.models.associations import career_skill_association, college_course_association # <-- UPDATE THIS LINE
+# ... (other imports)
+from app.models.associations import career_skill_association, college_course_association, career_course_association
+# ... (rest of the file is the same)
 
 print("Connecting to the database and creating tables...")
 

@@ -2,10 +2,16 @@ from pydantic import BaseModel, ConfigDict
 from typing import List
 from datetime import datetime
 
-# --- Helper Schema ---
+# --- Helper Schemas ---
 class CareerForSkill(BaseModel):
     id: int
     name: str
+    model_config = ConfigDict(from_attributes=True)
+
+class CollegeForCourse(BaseModel):
+    id: int
+    name: str
+    location: str
     model_config = ConfigDict(from_attributes=True)
 
 # --- Main Schemas ---
@@ -19,6 +25,7 @@ class Course(BaseModel):
     name: str
     stream: str
     duration_years: int
+    colleges: List[CollegeForCourse] = [] # <-- ADDED THIS
     model_config = ConfigDict(from_attributes=True)
 
 class College(BaseModel):
@@ -33,9 +40,9 @@ class Career(BaseModel):
     name: str
     description: str | None = None
     skills: List[Skill] = []
+    courses: List[Course] = []
     model_config = ConfigDict(from_attributes=True)
     
-# --- UPDATED USER SCHEMAS ---
 class UserBase(BaseModel):
     name: str | None = None
     current_education_level: str | None = None
@@ -44,9 +51,18 @@ class UserBase(BaseModel):
     location: str | None = None
 
 class UserCreate(UserBase):
-    id: str # The Firebase UID from the app
+    id: str
 
 class User(UserBase):
     id: str
     created_at: datetime
     model_config = ConfigDict(from_attributes=True)
+
+# Add this new class to your schemas.py file
+
+class QuizAnswers(BaseModel):
+    q1: str
+    q2: str | None = None
+    q3: str | None = None
+    q4: str | None = None
+    q5: str | None = None
